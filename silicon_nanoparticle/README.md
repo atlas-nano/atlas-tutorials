@@ -1,13 +1,13 @@
----
-
 **Prerequisite:**  
-Acquire the ATLAS-toolkit, for example, into your home directory:
+Acquire the ATLAS-toolkit. This tutorial assumes you have cloned it into your home directory:
 
 ```bash
 git clone https://github.com/atlas-nano/ATLAS-toolkit.git
 ```
 
-**First replicate to achieve desired dimension:**
+Now we are ready to start creating the nanoparticle. I suggest creating a new directory for your files associated with this tutorial.
+
+**First replicate your unit cell to achieve desired dimension:**
 
 ```bash
 ~/ATLAS-toolkit/scripts/replicate.pl -b ~/ATLAS-toolkit/scripts/dat/elements_bgfs/Si-Silicon.bgf -d "8 8 8" -s bulkSi.bgf
@@ -38,9 +38,11 @@ cat siNP-4nm.bgf | sed 's/RES A   444/QDA A     1/' > test.bgf
 ~/ATLAS-toolkit/scripts/autoType.pl -i test.bgf -f ~/ATLAS-toolkit/ff/DREIDING2.21.ff -s siNP-4nm.typed.bgf
 ```
 
-For my NPs, I wanted to functionalize them with larger ligands, so I prepared files for that accordingly. From this point on, you will need to adapt this procedure to suit your system.
+For my NPs, I wanted to functionalize them with larger ligands, so I prepared files for them accordingly. From this point on, you will likely need to adapt this procedure to suit your system.
 
 I functionalized the NP with oleic acids. Because the surface area of a 4nm diameter sphere is about 50nm², and the grafting density is about 2 ligands/nm², I use 100 ligands for the additive structure. I will use 93 ligands for the PXL structure to approximate the 13:1 ligand.
+
+When functionalizing your nanoparticle, try running `functionalize.pl` with no arguments to see the usage of the script. In particular, the `-a` and `-c` options are important as they correspond to the sites that will be functionalized and the atom on your ligand that will be bonded to the site on the nanoparticle.
 
 ```bash
 ~/ATLAS-toolkit/scripts/functionalize.pl -f siNP-4nm.typed.bgf -g ../ligand-structures/oleic-acid.dreid.bgf -a "numbonds<4" -n 100 -c 20 -r 1 -s siNP-preadditive-oleic.bgf
@@ -53,5 +55,3 @@ cat siNP-preadditive-oleic.bgf | sed 's/RES A   444/OLC A     2/' > test.bgf
 ```bash
 mv test.bgf siNP-preadditive-oleic.bgf
 ```
-
---- 
